@@ -1,0 +1,9 @@
+{
+  "name": "b3-scrapper",
+  "version": "0.0.1",
+  "description": "Scrapper for B3 site to get data for dividends",
+  "main": "index.js",
+  "repository": "https://github.com/renecms/b3-scrapper",
+  "author": "Rene",
+  "license": "MIT"
+}
