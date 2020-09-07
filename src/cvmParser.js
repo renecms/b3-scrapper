@@ -42,30 +42,33 @@ const headers = [
   'PAIS_RESP',
   'CEP_RESP',
   'TEL_RESP',
-  'FAX_RESPEMAIL_RESP',
+  'FAX_RESPE',
+  'MAIL_RESP',
   'TP_MERC',
-  'BOLSA',
 ];
 
 function processLineByLine(filename, callback) {
-  const companies = [];
+  const processedFile = [];
   const readInterface = createInterface({
     input: createReadStream(filename, { encoding: 'utf-8' }),
     crlfDelay: Infinity,
   });
   readInterface.on('line', (line) => {
-    const company = {};
+    const data = {};
     line.split('\t').forEach((field, index) => {
-      company[headers[index]] = field;
+      data[headers[index]] = field;
     });
-    companies.push(company);
+    processedFile.push(data);
   });
 
   readInterface.on('close', () => {
-    callback(companies);
+    const header = processedFile[0];
+    const data = processedFile.slice(1)
+    callback(header, data);
   });
 }
 
-processLineByLine('SPW_CIA_ABERTA.txt', (companies) => {
-  console.log(companies);
+processLineByLine('SPW_CIA_ABERTA.txt', (header, companies) => {
+  console.log(header); // header
+  console.log(companies.slice(1)[0]);
 });
