@@ -63,7 +63,7 @@ function processLineByLine(filename, callback) {
 
   readInterface.on('close', () => {
     const header = processedFile[0];
-    const data = processedFile.slice(1)
+    const data = processedFile.slice(1);
     callback(header, data);
   });
 }

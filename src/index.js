@@ -1,13 +1,13 @@
-import { get } from 'axios';
-import { load } from 'cheerio';
+import axios from 'axios';
+import cheerio from 'cheerio';
 
 async function getLatestEvents() {
   const bonusList = [];
   const dividendList = [];
-  const { data } = await get(
+  const { data } = await axios.get(
     'http://bvmf.bmfbovespa.com.br/cias-listadas/empresas-listadas/ResumoEventosCorporativos.aspx?codigoCvm=19348&tab=3&idioma=pt-br',
   );
-  const $ = load(data);
+  const $ = cheerio.load(data);
 
   $('#ctl00_contentPlaceHolderConteudo_grdBonificacao_ctl01 > tbody > tr').each(
     (_idx, row) => {
@@ -45,10 +45,10 @@ async function getLatestEvents() {
 
 async function getAllDividends(cvmCode) {
   const dividendList = [];
-  const { data } = await get(
+  const { data } = await axios.get(
     `http://bvmf.bmfbovespa.com.br/cias-listadas/empresas-listadas/ResumoProventosDinheiro.aspx?codigoCvm=${cvmCode}&tab=3.1&idioma=pt-br`,
   );
-  const $ = load(data);
+  const $ = cheerio.load(data);
 
   $('#ctl00_contentPlaceHolderConteudo_grdProventos_ctl01 > tbody > tr').each(
     (_idx, row) => {
